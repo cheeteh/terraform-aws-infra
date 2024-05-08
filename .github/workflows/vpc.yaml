@@ -6,6 +6,7 @@ on:
   pull_request:
     paths:
       - 'vpc/**'
+      - .github/workflows/vpc.yaml
 permissions:
   id-token: write # This is required for aws oidc connection
   contents: read # This is required for actions/checkout
