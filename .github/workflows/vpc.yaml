@@ -49,7 +49,10 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -var-file=terraform_tfvars/angi.tfvars
+        run: |
+          pwd
+          ls -ltr 
+          terraform plan -var-file=terraform_tfvars/angi.tfvars
         if: github.event_name == 'pull_request'
         continue-on-error: true
 
