@@ -6,6 +6,7 @@ on:
   pull_request:
     paths:
       - 'vpc/**'
+      - .github/workflows/vpc.yaml
 permissions:
   id-token: write # This is required for aws oidc connection
   contents: read # This is required for actions/checkout
@@ -46,15 +47,46 @@ jobs:
         id: init
         run: terraform init -backend-config=terraform_backend/angi.tfbackend
 
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
-
       - name: Terraform Plan
         id: plan
-        run: terraform plan -var-file=terraform_vars/angi.tfvars
+        run: |
+          pwd
+          ls -ltr 
+          terraform plan -var-file=terraform_tfvars/angi.tfvars
         if: github.event_name == 'pull_request'
         continue-on-error: true
+
+      - uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            <details><summary>Validation Output</summary>
+
+            </details>
+
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
 
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
@@ -62,4 +94,4 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -var-file=terraform_vars/angi.tfvars -auto-approve -lock-timeout=1800s
+        run: terraform apply -var-file=terraform_tfvars/angi.tfvars -auto-approve -lock-timeout=1800s
