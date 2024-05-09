@@ -30,12 +30,12 @@ output "node_groups" {
 
 output "cluster_ca_certificate" {
   description = "Cluster CA Cert"
-  value = module.aws_eks_cluster.cluster.endpoint
+  value = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   sensitive = true
 }
 
 output "cluster_auth_token" {
   description = "Cluster Auth Token"
-  value = module.aws_eks_cluster_auth.cluster.endpoint
+  value = data.aws_eks_cluster_auth.cluster.token
   sensitive = true
 }
