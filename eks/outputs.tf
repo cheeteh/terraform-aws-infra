@@ -27,3 +27,15 @@ output "node_groups" {
   description = "Outputs from EKS node groups."
   value       = module.eks.eks_managed_node_groups
 }
+
+output "cluster_ca_certificate" {
+  description = "Cluster CA Cert"
+  value = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+  sensitive = true
+}
+
+output "cluster_auth_token" {
+  description = "Cluster Auth Token"
+  value = data.aws_eks_cluster_auth.cluster.token
+  sensitive = true
+}
