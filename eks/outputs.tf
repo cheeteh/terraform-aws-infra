@@ -30,7 +30,7 @@ output "node_groups" {
 
 output "cluster_ca_certificate" {
   description = "Cluster CA Cert"
-  value = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+  value = data.aws_eks_cluster.cluster.certificate_authority.0.data
   sensitive = true
 }
 
