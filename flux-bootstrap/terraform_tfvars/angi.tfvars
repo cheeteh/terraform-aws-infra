@@ -7,5 +7,5 @@ environment = "dev"
 owners      = "aws"
 
 backend_bucket = "terraform-aws-infra-backend-tfstates"
-github_repository = "flux-infra"
+github_repository = "terraform-aws-infra"
 github_org = "cheeteh"
