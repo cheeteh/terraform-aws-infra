@@ -1,4 +1,4 @@
-name: "Flux Bootstap"
+name: "Flux Bootstrap"
 on:
   push:
     branches:
@@ -13,7 +13,7 @@ permissions:
   pull-requests: write # This is required for gh bot to comment PR
 
 env:
-  TF_LOG: INFO
+#   TF_LOG: INFO
   AWS_REGION: ${{ secrets.AWS_REGION }}
 jobs:
   deploy_eks:
@@ -21,7 +21,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: eks
+        working-directory: flux-bootstrap
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
