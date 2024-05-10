@@ -11,7 +11,12 @@ data "terraform_remote_state" "eks" {
 provider "flux" {
   kubernetes = {
     host                   = data.terraform_remote_state.eks.outputs.cluster_endpoint
-    cluster_ca_certificate = data.terraform_remote_state.eks.outputs.cluster_ca_certificate
+    cluster_ca_certificate = base64decode(data.terraform_remote_state.eks.outputs.cluster_ca_certificate)
+    token                  = data.terraform_remote_state.eks.outputs.cluster_auth_token
+  }
+  kubectl = {
+    host                   = data.terraform_remote_state.eks.outputs.cluster_endpoint
+    cluster_ca_certificate = base64decode(data.terraform_remote_state.eks.outputs.cluster_ca_certificate)
     token                  = data.terraform_remote_state.eks.outputs.cluster_auth_token
   }
   git = {
