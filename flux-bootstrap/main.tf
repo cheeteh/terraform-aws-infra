@@ -14,11 +14,6 @@ provider "flux" {
     cluster_ca_certificate = base64decode(data.terraform_remote_state.eks.outputs.cluster_ca_certificate)
     token                  = data.terraform_remote_state.eks.outputs.cluster_auth_token
   }
-  kubectl = {
-    host                   = data.terraform_remote_state.eks.outputs.cluster_endpoint
-    cluster_ca_certificate = base64decode(data.terraform_remote_state.eks.outputs.cluster_ca_certificate)
-    token                  = data.terraform_remote_state.eks.outputs.cluster_auth_token
-  }
   git = {
     url = "ssh://git@github.com/${var.github_org}/${var.github_repository}.git"
     ssh = {
