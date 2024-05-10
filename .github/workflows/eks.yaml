@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'eks/**'
+      - .github/workflows/eks.yaml
   pull_request:
     paths:
       - 'eks/**'
