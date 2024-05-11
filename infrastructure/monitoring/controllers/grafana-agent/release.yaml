@@ -12,6 +12,10 @@ spec:
         kind: HelmRepository
         name: grafana-agent
       interval: 60m
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   # https://github.com/grafana/agent/blob/main/operations/helm/charts/grafana-agent/values.yaml
   values:
     service:
