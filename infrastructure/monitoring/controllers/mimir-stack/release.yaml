@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: mimir-distributed
+spec:
+  interval: 5m
+  dependsOn:
+    - name: kube-prometheus-stack
+  chart:
+    spec:
+      version: "5.4.x"
+      chart: mimir-distributed
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-charts
+      interval: 60m
+  # https://github.com/grafana/mimir/blob/main/operations/helm/charts/mimir-distributed/values.yaml
+  values:
+    rbac:
+      create: false
+    minio:
+      enabled: false
+    alertmanager:
+      enabled: true
+    ruler:
+      enabled: false
+    ingester:
+      zoneAwareReplication:
+        enabled: false
+      persistentVolume:
+        enabled: true
+    store_gateway:
+      zoneAwareReplication:
+        enabled: false
+    metaMonitoring:
+      dashboards:
+        enabled: true
+      serviceMonitor:
+        enabled: true
+        annotations:
+          app.kubernetes.io/part-of: kube-prometheus-stack
+      grafanaAgent:
+        enabled: true
