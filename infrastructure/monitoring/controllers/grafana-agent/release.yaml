@@ -8,10 +8,20 @@ spec:
     - name: kube-prometheus-stack
   chart:
     spec:
-      version: "0.38.x"
+      version: "latest"
       chart: grafana-agent
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
       interval: 60m
   # https://github.com/grafana/agent/blob/main/operations/helm/charts/grafana-agent/values.yaml
+  values:
+    service:
+      type: ClusterIP
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
