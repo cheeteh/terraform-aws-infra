@@ -6,7 +6,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      version: "latest"
+      version: "0.38.0"
       chart: grafana-agent
       sourceRef:
         kind: HelmRepository
