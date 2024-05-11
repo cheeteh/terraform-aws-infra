@@ -4,15 +4,13 @@ metadata:
   name: grafana-agent
 spec:
   interval: 5m
-  dependsOn:
-    - name: kube-prometheus-stack
   chart:
     spec:
       version: "latest"
       chart: grafana-agent
       sourceRef:
         kind: HelmRepository
-        name: grafana-charts
+        name: grafana-agent
       interval: 60m
   # https://github.com/grafana/agent/blob/main/operations/helm/charts/grafana-agent/values.yaml
   values:
