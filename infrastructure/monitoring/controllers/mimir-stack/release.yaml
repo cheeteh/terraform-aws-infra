@@ -12,17 +12,6 @@ spec:
         kind: HelmRepository
         name: grafana-mimir
       interval: 60m
-  env:
-    access_key: 
-      valueFrom:
-        secretKeyRef:
-          name: mimir-s3-credentials
-          key: access_key
-    secret_key:
-      valueFrom:
-        secretKeyRef:
-          name: mimir-s3-credentials
-          key: secret_key
   # https://github.com/grafana/mimir/blob/main/operations/helm/charts/mimir-distributed/values.yaml
   values:
     global:
