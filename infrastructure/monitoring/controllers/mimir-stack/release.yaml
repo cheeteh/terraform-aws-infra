@@ -6,13 +6,12 @@ spec:
   interval: 5m
   chart:
     spec:
-      version: "5.4.x"
+      version: "5.3.0"
       chart: mimir-distributed
       sourceRef:
         kind: HelmRepository
         name: grafana-mimir
       interval: 60m
-  
   env:
     S3_ACCESS_KEY: 
       valueFrom:
@@ -26,28 +25,43 @@ spec:
           key: secret_key
   # https://github.com/grafana/mimir/blob/main/operations/helm/charts/mimir-distributed/values.yaml
   values:
-    rbac:
-      create: false
+    global:
+      extraEnvFrom:
+        - secretRef:
+            name: mimir-s3-credentials
+      podAnnotations:
+        bucketSecretVersion: "0"
+
+    # This turns of the built-in MinIO support
     minio:
       enabled: false
-    alertmanager:
-      enabled: true
-    ruler:
-      enabled: false
-    ingester:
-      zoneAwareReplication:
-        enabled: false
-      persistentVolume:
-        enabled: true
-    store_gateway:
-      zoneAwareReplication:
-        enabled: false
-    metaMonitoring:
-      dashboards:
-        enabled: true
-      serviceMonitor:
-        enabled: true
-        annotations:
-          app.kubernetes.io/part-of: kube-prometheus-stack
-      grafanaAgent:
-        enabled: true
+
+    mimir:
+      structuredConfig:
+        # Uncomment when using Grafana Enterprise Metrics
+        # admin_client:
+        #   storage:
+        #     s3:
+        #       bucket_name: my-admin-bucket
+        #       access_key_id: ${AWS_ACCESS_KEY_ID}
+        #       endpoint: s3.amazonaws.com
+        #       secret_access_key: ${AWS_SECRET_ACCESS_KEY}
+        alertmanager_storage:
+          s3:
+            access_key_id: ${S3_ACCESS_KEY}
+            bucket_name: terraform-aws-infra-mimir
+            endpoint: s3.us-east-1.amazonaws.com
+            secret_access_key: ${S3_SECRET_KEY}
+        blocks_storage:
+          backend: s3
+          s3:
+            access_key_id: ${S3_ACCESS_KEY}
+            bucket_name: terraform-aws-infra-mimir
+            endpoint: s3.us-east-1.amazonaws.com
+            secret_access_key: ${S3_SECRET_KEY}    
+        ruler_storage:
+          s3:
+            access_key_id: ${S3_ACCESS_KEY}
+            bucket_name: terraform-aws-infra-mimir
+            endpoint: s3.us-east-1.amazonaws.com
+            secret_access_key: ${S3_SECRET_KEY}  
