@@ -47,7 +47,7 @@ module "eks" {
     angi-managed = {
       min_size     = 2
       max_size     = 10
-      desired_size = 3
+      desired_size = 2
 
       instance_types = ["m5.large"]
       capacity_type  = "SPOT"
