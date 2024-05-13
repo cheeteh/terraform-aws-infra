@@ -8,14 +8,13 @@ spec:
     - name: kube-prometheus-stack
   chart:
     spec:
-      version: "2.9.6"
+      version: "0.79.x"
       chart: loki-distributed
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
       interval: 60m
-  # https://github.com/grafana/helm-charts/blob/main/charts/loki-stack/values.yaml
-  # https://github.com/grafana/loki/blob/main/production/helm/loki/values.yaml
+# https://github.com/grafana/helm-charts/blob/main/charts/loki-distributed/values.yaml
   values:
     promtail:
       enabled: true
