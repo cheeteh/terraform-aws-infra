@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: promtail
+spec:
+  interval: 5m
+  chart:
+    spec:
+      version: "6.15.5"
+      chart: promtail
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-promtail
+      interval: 60m
+# https://github.com/grafana/helm-charts/blob/main/charts/loki-distributed/values.yaml
+  values:
+    config:
+      serverPort: 8080
+      clients:
+        - url: http://loki-loki-distributed-gateway/loki/api/v1/push
+
