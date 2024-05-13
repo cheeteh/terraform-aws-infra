@@ -2,7 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: monitoring
 resources:
-  - podmonitor.yaml
+  - podmonitor-flux-system.yaml
+  - podmonitor-kube-system.yaml
+  - podmonitor-monitoring.yaml
 configMapGenerator:
   - name: flux-grafana-dashboards
     files:
