@@ -2,9 +2,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: monitoring
-  labels:
-    app.kubernetes.io/part-of: flux
-    app.kubernetes.io/component: monitoring
 spec:
   selector: {}
   podMetricsEndpoints: []
