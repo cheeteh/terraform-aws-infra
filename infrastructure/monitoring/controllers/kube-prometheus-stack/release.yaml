@@ -42,6 +42,41 @@ spec:
         podMonitorSelector:
           matchLabels:
             app.kubernetes.io/component: monitoring
+        remoteWrite:
+        - url: http://mimir-nginx.monitoring.svc.cluster.local:80/api/v1/push
+          headers:
+            X-Scope-OrgID: eks-angi
     grafana:
       defaultDashboardsEnabled: false
-      adminPassword: flux
+      adminPassword: angi-grafana
+      additionalDataSources:
+      - name: Loki
+        type: loki
+        url: http://loki-stack:3100
+        access: proxy
+        jsonData:
+            derivedFields:
+              - datasourceUid: tempo
+                matcherRegex: ((\d+|[a-z]+)(\d+|[a-z]+)(\d+|[a-z]+)(\d+|[a-z]+)(\d+|[a-z]+)(\d+|[a-z]+)(\d+|[a-z]+)(\d+|[a-z]+)(\d+|[a-z]+)(\d+|[a-z]+)(\d+|[a-z]+))
+                name: TraceID
+                url: $${__value.raw}
+            maxLines: 1000
+        version: 1
+      - name: Tempo
+        type: tempo
+        uid: tempo
+        url: http://tempo-query-frontend:3100
+        access: proxy
+        version: 1
+      - name: Mimir
+        type: prometheus
+        uid: mimir
+        url: http://mimir-nginx.monitoring.svc:80/prometheus
+        editable: true
+        jsonData:
+          httpHeaderName1: "X-Scope-OrgID"
+        secureJsonData:
+          httpHeaderValue1: "eks-angi"
+        access: proxy
+        version: 1
+
