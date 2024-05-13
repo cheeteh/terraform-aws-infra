@@ -32,11 +32,11 @@ Manual steps:
 
 ## Usage
 
-- [EKS setup]()
-- [VPC setup]()
-- [Flux Bootstrap]()
-- [FluxCD]
-- [Infrastructure Setup]()
+- [EKS setup](https://github.com/cheeteh/terraform-aws-infra/blob/main/eks/README.md)
+- [VPC setup](https://github.com/cheeteh/terraform-aws-infra/blob/main/vpc/README.md)
+- [Flux Bootstrap](https://github.com/cheeteh/terraform-aws-infra/blob/main/flux-bootstrap/README.md)
+- [FluxCD](https://github.com/cheeteh/terraform-aws-infra/blob/main/fluxcd/cluster/eks-angi/README.md)
+- [Infrastructure Setup](https://github.com/cheeteh/terraform-aws-infra/blob/main/infrastructure/monitoring/README.md)
 
 ## Continues Delivery Methodology 
 
