@@ -50,7 +50,7 @@ module "eks" {
       desired_size = 3
 
       instance_types = ["m5.large"]
-      capacity_type  = "SPOT"
+      capacity_type  = "ON_DEMAND"
     }
   }
 
