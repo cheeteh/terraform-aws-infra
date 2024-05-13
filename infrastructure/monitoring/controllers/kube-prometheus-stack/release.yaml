@@ -48,7 +48,7 @@ spec:
             X-Scope-OrgID: eks-angi
     grafana:
       defaultDashboardsEnabled: false
-      adminPassword: angi-grafana
+      adminPassword: angi-platform
       additionalDataSources:
       - name: Loki
         type: loki
