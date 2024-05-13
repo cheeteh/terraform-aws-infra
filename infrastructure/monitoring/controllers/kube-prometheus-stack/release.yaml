@@ -38,10 +38,6 @@ spec:
           requests:
             cpu: 200m
             memory: 200Mi
-        podMonitorNamespaceSelector: { }
-        podMonitorSelector:
-          matchLabels:
-            app.kubernetes.io/component: monitoring
         remoteWrite:
         - url: http://mimir-nginx.monitoring.svc.cluster.local:80/api/v1/push
           headers:
