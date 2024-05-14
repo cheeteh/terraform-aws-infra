@@ -62,7 +62,6 @@ Reference - https://github.com/odigos-io/opentelemetry-go-instrumentation
 ## Improvements
 
 - remove any manuals steps and automate
-- allow loki to accept non json format logs
 - better code structure and template utilization
 - better documentation
 
