@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: emoji
+  name: emoji-otel
   namespace: emojivoto
   labels:
     app.kubernetes.io/name: emoji
@@ -61,7 +61,7 @@ spec:
             - name: OTEL_TARGET_EXE
               value: /usr/local/bin/emojivoto-emoji-svc
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: "grafana-agent:4317"
+              value: "grafana-agent.monitoring.svc.cluster.local:4317"
             - name: OTEL_SERVICE_NAME
               value: "emojivoto-emoji"
           securityContext:
@@ -83,7 +83,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: voting
+  name: voting-otel
   namespace: emojivoto
   labels:
     app.kubernetes.io/name: voting
@@ -143,7 +143,7 @@ spec:
             - name: OTEL_TARGET_EXE
               value: /usr/local/bin/emojivoto-voting-svc
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: "grafana-agent:4317"
+              value: "grafana-agent.monitoring.svc.cluster.local:4317"
             - name: OTEL_SERVICE_NAME
               value: "emojivoto-voting"
           securityContext:
@@ -165,7 +165,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web
+  name: web-otel
   namespace: emojivoto
   labels:
     app.kubernetes.io/name: web
@@ -227,7 +227,7 @@ spec:
             - name: OTEL_TARGET_EXE
               value: /usr/local/bin/emojivoto-web
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: "grafana-agent:4317"
+              value: "grafana-agent.monitoring.svc.cluster.local:4317"
             - name: OTEL_SERVICE_NAME
               value: "emojivoto-web"
           securityContext:
