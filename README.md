@@ -1,6 +1,4 @@
-# ANGI PLATFORM 
-
-Take home project.
+# PLATFORM 
 
 ## Overview
 
