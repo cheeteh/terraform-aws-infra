@@ -64,4 +64,8 @@ Reference - https://github.com/odigos-io/opentelemetry-go-instrumentation
 - remove any manuals steps and automate
 - better code structure and template utilization
 - better documentation
-
+- better structure for flux
+- image creation CI
+- image repository reference
+- image policies
+- incorrect instrumentation utilizing generic trace vs opentrace library
